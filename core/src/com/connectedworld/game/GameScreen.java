@@ -44,11 +44,9 @@ public class GameScreen implements Screen {
         //render the writer
 
         game.mmo.drawXp();
-        game.bob.draw(); //TODO: make a method that draws all the assets in the game?
+        game.bob.draw();
         game.batch.end();  //submit all drawing requests at once, speeding up rendering
-        game.bob.render(); //TODO: make a render method for all the game assets?
-//        game.mmo.updateXpPosition();
-
+        game.bob.render();
     }
 
     @Override
