@@ -101,6 +101,16 @@ public class TextHandler {
         else if (Gdx.input.isKeyJustPressed(Input.Keys.X)) { addCharToInput('x'); }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.Y)) { addCharToInput('y'); }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.Z)) { addCharToInput('z'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) { addCharToInput('0'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) { addCharToInput('1'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) { addCharToInput('2'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) { addCharToInput('3'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) { addCharToInput('4'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_5)) { addCharToInput('5'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_6)) { addCharToInput('6'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_7)) { addCharToInput('7'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_8)) { addCharToInput('8'); }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_9)) { addCharToInput('9'); }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) { addCharToInput(' '); }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
             removeLastInputChar();

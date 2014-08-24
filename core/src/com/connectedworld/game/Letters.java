@@ -1,8 +1,6 @@
 package com.connectedworld.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -13,24 +11,16 @@ public class Letters {
     final ConnectedWorld game;
     private HashMap<Character, TextureRegion> letters;
     private Texture lettersTexture;
+    private Texture numbersTexture;
     private int letterWidth;
 
     public Letters(final ConnectedWorld game) {
         this.game = game;
         lettersTexture = new Texture(Gdx.files.internal("letters.png"));
+        numbersTexture = new Texture(Gdx.files.internal("numbers.png"));
         letterWidth = 30;
         letters = new HashMap<Character, TextureRegion>();
-//        TextureRegion a = new TextureRegion(lettersTexture, 0, 0, 30, 30);
-//        letters.put('a', a);
-//        TextureRegion b = new TextureRegion(lettersTexture, 30, 0, 30, 30);
-//        letters.put('b', b);
-//        TextureRegion c = new TextureRegion(lettersTexture, 30* 2, 0, 30, 30);
-//        letters.put('c', c);
-//        TextureRegion d = new TextureRegion(lettersTexture, 30* 2, 0, 30, 30);
-//        letters.put('c', d);  //TODO: programmatically build this...
-//        //loop over letters, call a method and pass the char and the multiple it should multiply 30 by
-//        TextureRegion space = new TextureRegion(lettersTexture, 30 * 26, 0, 30, 30);
-//        letters.put(' ', space);
+
         buildLetter('a', 0);
         buildLetter('b', 1);
         buildLetter('c', 2);
@@ -69,6 +59,17 @@ public class Letters {
         buildLetter('#', 35);
         buildLetter('(', 36);
         buildLetter(')', 37);
+
+        buildNumber('1', 0);
+        buildNumber('2', 1);
+        buildNumber('3', 2);
+        buildNumber('4', 3);
+        buildNumber('5', 4);
+        buildNumber('6', 5);
+        buildNumber('7', 6);
+        buildNumber('8', 7);
+        buildNumber('9', 8);
+        buildNumber('0', 9);
     }
 
     public void buildLetter(char letter, int x) {
@@ -76,8 +77,13 @@ public class Letters {
         letters.put(letter, letterTexture);
     }
 
+    public void buildNumber(char number, int x) {
+        TextureRegion numberTexture = new TextureRegion(numbersTexture, 30 * x, 0 , 30, 30);
+        letters.put(number, numberTexture);
+    }
+
     public void draw(Character character, int x, int y) {
-        TextureRegion toDraw = letters.get(character);
+        TextureRegion toDraw = letters.get(Character.toLowerCase(character));
         game.batch.draw(toDraw, x, y);
     }
 

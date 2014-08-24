@@ -24,8 +24,6 @@ public class GameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, game.screenWidth, game.screenHeight);
 
-        //TODO: for testing
-        game.outputWriter.writeOutputMessage("versace versace");
         game.mmo.firstTimeConnect();
     }
 
@@ -44,15 +42,13 @@ public class GameScreen implements Screen {
         //METHOD FOR HANDLING TEXT WRITING
         game.textHandler.handle();
         //render the writer
-//        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-//            game.writer.clearText();
-//        }
-//        game.writer.render();
 
-//        game.batch.draw(testTexture, testRectangle.x, testRectangle.y);
+        game.mmo.drawXp();
         game.bob.draw(); //TODO: make a method that draws all the assets in the game?
         game.batch.end();  //submit all drawing requests at once, speeding up rendering
         game.bob.render(); //TODO: make a render method for all the game assets?
+//        game.mmo.updateXpPosition();
+
     }
 
     @Override

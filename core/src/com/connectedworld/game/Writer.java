@@ -31,8 +31,8 @@ public class Writer {
         letters = new Letters(game);
         writingBoxX = 75;
         writingBoxY = 500;
-        inputWritingBoxX = 150;
-        inputWritingBoxY = 350;
+        inputWritingBoxX = 50;
+        inputWritingBoxY = 380;
         messageQueue = new LinkedList<String>();
         currentlyOutputting = false;
 
@@ -41,7 +41,7 @@ public class Writer {
         displayedOutputMessage = "";
         timeOutputMessageStart = 0L;
         timeOutputMessageEnd = 0L;
-        renderTimeSpeed = 100L;
+        renderTimeSpeed = 50L;
 
         typeSound = Gdx.audio.newMusic(Gdx.files.internal("typing.wav"));
     }
@@ -97,7 +97,7 @@ public class Writer {
                 typeSound.stop();
                 timeOutputMessageEnd = TimeUtils.millis();
             }
-            if (TimeUtils.timeSinceMillis(timeOutputMessageEnd) > 1000) {
+            if (TimeUtils.timeSinceMillis(timeOutputMessageEnd) > 900) {
                 //can resume output queue
                 if (messageQueue.size() > 0) {
                     currentlyOutputting = true;
@@ -141,15 +141,35 @@ public class Writer {
          *      (Don't handle the sound here, this should render even when user isn't entering)
          */
         //TODO: write this out, go through each char perhaps?
+//        char[] msgChars = inputMessage.toCharArray();
+//        int nextX = inputWritingBoxX;
+//        int nextY = inputWritingBoxY;
+//        //TODO: for now, just attempt to write at origin
+//        for (char c : msgChars) {
+//            letters.draw(c, nextX, nextY);
+//            nextX += letters.getLetterWidth(); //todo: when to wrap to next line
+//            //TODO: a test for when to move down on the page
+//        }
+        renderInputMessage(inputMessage, inputWritingBoxX, inputWritingBoxY);
+    }
+
+    public void renderInputMessage(String inputMessage, int x, int y) {
+        /**
+         * renders immediately the string that is past
+         *      (Don't handle the sound here, this should render even when user isn't entering)
+         */
         char[] msgChars = inputMessage.toCharArray();
-        int nextX = inputWritingBoxX;
-        int nextY = inputWritingBoxY;
-        //TODO: for now, just attempt to write at origin
+        int nextX = x;
+        int nextY = y;
         for (char c : msgChars) {
             letters.draw(c, nextX, nextY);
-            nextX += letters.getLetterWidth(); //todo: when to wrap to next line
-            //TODO: a test for when to move down on the page
+            nextX += letters.getLetterWidth();
         }
+    }
+
+
+    public void renderSingleChar(char c, int x, int y) {
+        letters.draw(c, x, y);
     }
 
     /**
