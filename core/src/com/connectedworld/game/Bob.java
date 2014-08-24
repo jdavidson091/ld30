@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 public class Bob{
     final ConnectedWorld game;
 
+    public BobState state;
     private Texture bobImage;
     private Sound stepSound;
 
@@ -21,9 +22,11 @@ public class Bob{
     private int bobHeight = 64;
     private int bobWidth = 64;
 
-//    public void create() {          //TODO: make this the constructor, passed game object
     public Bob(final ConnectedWorld game) {
         this.game = game;
+
+        //TODO: change his initial state to in bed, this is for testing
+        state = BobState.SEATED;
 
         //load image textures
         bobImage = new Texture(Gdx.files.internal("droplet.png"));

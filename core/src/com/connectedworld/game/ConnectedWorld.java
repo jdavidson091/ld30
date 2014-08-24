@@ -11,12 +11,13 @@ public class ConnectedWorld extends Game {
     public int screenWidth = 1024;              //game
     public int screenHeight = 576;              //game
     public Bob bob;
-    public Writer writer;
+    public Writer outputWriter, inputWriter;
     public TextHandler textHandler;
 
     public void create() {
         bob = new Bob(this);
-        writer = new Writer(this);
+        outputWriter = new Writer(this);
+        inputWriter = new Writer(this);
         textHandler = new TextHandler(this);
 
         batch = new SpriteBatch();
