@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.TimeUtils;
 
+import java.util.LinkedList;
+
 public class Writer {
 
     final ConnectedWorld game;
@@ -12,30 +14,34 @@ public class Writer {
     private String fullOutputMessage;
 //    private String inputMessage;
     private long timeOutputMessageStart;
+    private long timeOutputMessageEnd;
     private long renderTimeSpeed;
     private int writingBoxX;
     private int writingBoxY;
     private int inputWritingBoxX;
     private int inputWritingBoxY;
+    private boolean currentlyOutputting;
+
+    private LinkedList<String> messageQueue;
 
     private Music typeSound;
 
     public Writer(final ConnectedWorld game) {
         this.game = game;
         letters = new Letters(game);
-        writingBoxX = 100;
-        writingBoxY = 400;
-        inputWritingBoxX = 100;
-        inputWritingBoxY = 100;
+        writingBoxX = 75;
+        writingBoxY = 500;
+        inputWritingBoxX = 150;
+        inputWritingBoxY = 350;
+        messageQueue = new LinkedList<String>();
+        currentlyOutputting = false;
 
         //for output style writing
         fullOutputMessage = "";
         displayedOutputMessage = "";
         timeOutputMessageStart = 0L;
+        timeOutputMessageEnd = 0L;
         renderTimeSpeed = 100L;
-
-        //for input style writing
-//        inputMessage = "";        //TODO: remove this, confirm it is in TextHandler
 
         typeSound = Gdx.audio.newMusic(Gdx.files.internal("typing.wav"));
     }
@@ -55,10 +61,26 @@ public class Writer {
     public void writeOutputMessage(String message) {
         /**
          * sets the message to be written when rendering dynamically
+         *
+         * TODO: have the pausing here? once rendering is done?
+         * TODO: have a queue of inputs? Take next in line?
          */
-        fullOutputMessage = message;
-        timeOutputMessageStart = TimeUtils.millis();
-        typeSound.play();
+//        fullOutputMessage = message;
+//        timeOutputMessageStart = TimeUtils.millis();
+//        typeSound.play();
+
+        messageQueue.add(message);
+        if (!currentlyOutputting) {
+            currentlyOutputting = true;
+            fullOutputMessage = messageQueue.removeFirst();
+            timeOutputMessageStart = TimeUtils.millis();
+            typeSound.play();
+        }
+
+//        fullOutputMessage = message;
+//        timeOutputMessageStart = TimeUtils.millis();
+//        typeSound.play();
+
     }
 
 
@@ -66,14 +88,28 @@ public class Writer {
         /**
          * "renders" whatever next is in the fullOutputMessage dynamically
          */
-        //TODO: test this
         if (fullOutputMessage.length() < 1) { return; }
 
         int renderLength = (int) (TimeUtils.timeSinceMillis(timeOutputMessageStart) / renderTimeSpeed) ;
         if (renderLength > fullOutputMessage.length()) {
             renderLength = fullOutputMessage.length();
-            if (typeSound.isPlaying()) {
+            if (typeSound.isPlaying()) { //indicator that first time stopping
                 typeSound.stop();
+                timeOutputMessageEnd = TimeUtils.millis();
+            }
+            if (TimeUtils.timeSinceMillis(timeOutputMessageEnd) > 1000) {
+                //can resume output queue
+                if (messageQueue.size() > 0) {
+                    currentlyOutputting = true;
+                    fullOutputMessage = messageQueue.removeFirst();
+                    timeOutputMessageStart = TimeUtils.millis();
+                    typeSound.play();
+                    renderLength = 0;
+                } else {
+                    currentlyOutputting = false;
+
+                    game.mmo.canResumeGame(); //lets the user continue input.
+                }
             }
         }
 
@@ -86,6 +122,10 @@ public class Writer {
         for (char c : msgChars) {
             letters.draw(c, nextX, nextY);
             nextX += letters.getLetterWidth(); //todo: when to wrap to next line
+            if (nextX > game.screenWidth - letters.getLetterWidth()) {
+                nextX = writingBoxX;
+                nextY = writingBoxY - letters.getLetterWidth();
+            }
             //TODO: a test for when to move down on the page
         }
     }

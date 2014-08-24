@@ -13,12 +13,14 @@ public class ConnectedWorld extends Game {
     public Bob bob;
     public Writer outputWriter, inputWriter;
     public TextHandler textHandler;
+    public MMOGame mmo;
 
     public void create() {
         bob = new Bob(this);
         outputWriter = new Writer(this);
         inputWriter = new Writer(this);
         textHandler = new TextHandler(this);
+        mmo = new MMOGame(this);
 
         batch = new SpriteBatch();
         font = new BitmapFont();

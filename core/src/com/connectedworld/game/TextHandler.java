@@ -13,6 +13,8 @@ public class TextHandler {
     public TextHandler(ConnectedWorld game) {
         this.game = game;
         inputBuilder = new StringBuffer();
+        inputBuilder.append('>');
+
         keyPress = Gdx.audio.newSound(Gdx.files.internal("keypress.wav"));
     }
 
@@ -30,6 +32,7 @@ public class TextHandler {
         game.inputWriter.clearText();  //TODO: is this needed? probably not
         inputBuilder.delete(0, inputBuilder.length());
         inputBuilder.setLength(0);
+        inputBuilder.append('>');
     }
 
     public void handle() {
@@ -110,10 +113,8 @@ public class TextHandler {
          * check to see if enter was pressed, handle text validation
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-
-            //ENTER is pressed
-            //TODO: TEST is below
-            inputBuilder.append("enter");
+            game.mmo.acceptUserInput(inputBuilder.toString());
+            clearInputText();
         }
     }
 
@@ -136,7 +137,10 @@ public class TextHandler {
 //        game.inputWriter.renderInputMessage(inputBuilder.toString());
     }
     protected void removeLastInputChar() {
-        inputBuilder.deleteCharAt(inputBuilder.length() - 1);
+        if (inputBuilder.length() > 1) {
+            inputBuilder.deleteCharAt(inputBuilder.length() - 1);
+        }
+
         keyPress.play();
     }
 }

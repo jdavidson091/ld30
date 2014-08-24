@@ -1,13 +1,10 @@
 package com.connectedworld.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Rectangle;
 
 public class GameScreen implements Screen {
     final ConnectedWorld game;
@@ -28,7 +25,8 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, game.screenWidth, game.screenHeight);
 
         //TODO: for testing
-        game.outputWriter.writeOutputMessage("aba aaa abb");
+        game.outputWriter.writeOutputMessage("versace versace");
+        game.mmo.firstTimeConnect();
     }
 
     @Override
