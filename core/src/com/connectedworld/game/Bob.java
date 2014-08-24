@@ -29,7 +29,7 @@ public class Bob{
         bobImage = new Texture(Gdx.files.internal("droplet.png"));
 
         //load sound asses
-        stepSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        stepSound = Gdx.audio.newSound(Gdx.files.internal("step.wav"));
 
         characterModel = new Rectangle();
         characterModel.x = game.screenWidth / 2 - bobWidth / 2;
