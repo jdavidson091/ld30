@@ -12,6 +12,7 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
 
 
+
     public GameScreen(final ConnectedWorld gam) {
         this.game = gam;
 
@@ -23,8 +24,6 @@ public class GameScreen implements Screen {
         //create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, game.screenWidth, game.screenHeight);
-
-        game.mmo.firstTimeConnect();
     }
 
     @Override
@@ -35,7 +34,6 @@ public class GameScreen implements Screen {
 
         camera.update(); //updates the camera once per frame
 
-
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
@@ -43,10 +41,14 @@ public class GameScreen implements Screen {
         game.textHandler.handle();
         //render the writer
 
-        game.mmo.drawXp();
-        game.bob.draw();
-        game.batch.end();  //submit all drawing requests at once, speeding up rendering
-        game.bob.render();
+//        if (game.mmo.getLevelNum() < 2) {
+            if (game.bob.state.equals(BobState.SEATED)) {
+                game.mmo.drawXp();
+            }
+
+            game.bob.draw();
+            game.batch.end();  //submit all drawing requests at once, speeding up rendering
+            game.bob.render();
     }
 
     @Override

@@ -73,9 +73,6 @@ public class MainMenuScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-//        game.font.draw(game.batch, "Connected World. ", 100, 150);
-//        game.font.draw(game.batch, "Click to continue.", 100, 100);
-//        if (TimeUtils.timeSinceMillis(timePassed) > 100)
         game.batch.draw(titleTextures.get(screenCounter), 0, 0);
 
         game.batch.end();

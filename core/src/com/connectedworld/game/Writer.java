@@ -77,10 +77,6 @@ public class Writer {
             typeSound.play();
         }
 
-//        fullOutputMessage = message;
-//        timeOutputMessageStart = TimeUtils.millis();
-//        typeSound.play();
-
     }
 
 
@@ -140,16 +136,6 @@ public class Writer {
          * renders immediately the string that is past
          *      (Don't handle the sound here, this should render even when user isn't entering)
          */
-        //TODO: write this out, go through each char perhaps?
-//        char[] msgChars = inputMessage.toCharArray();
-//        int nextX = inputWritingBoxX;
-//        int nextY = inputWritingBoxY;
-//        //TODO: for now, just attempt to write at origin
-//        for (char c : msgChars) {
-//            letters.draw(c, nextX, nextY);
-//            nextX += letters.getLetterWidth(); //todo: when to wrap to next line
-//            //TODO: a test for when to move down on the page
-//        }
         renderInputMessage(inputMessage, inputWritingBoxX, inputWritingBoxY);
     }
 

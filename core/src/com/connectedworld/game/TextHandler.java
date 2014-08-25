@@ -58,17 +58,10 @@ public class TextHandler {
             handleTextInput();
             handleEnter();
             handleExit();
+
+            game.outputWriter.renderOutputMessageDynamic();
+            game.inputWriter.renderInputMessage(inputBuilder.toString());
         }
-
-        game.outputWriter.renderOutputMessageDynamic();
-        game.inputWriter.renderInputMessage(inputBuilder.toString());
-
-        //for testing purposes
-//        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-//            game.writer.clearText();
-//        }
-//
-//        game.writer.render();
     }
 
     public void handleTextInput() {
@@ -123,20 +116,15 @@ public class TextHandler {
          * check to see if enter was pressed, handle text validation
          */
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            game.mmo.acceptUserInput(inputBuilder.toString());
+//            if (!game.mmo.isInEndGame()) {
+                game.mmo.acceptUserInput(inputBuilder.toString());
+//            }
+
             clearInputText();
         }
     }
 
     public void handleExit() {
-        /**
-         * check to see if ESC was pressed, clear current text
-         */
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            //ENTER is pressed
-            clearOutputText(); //TODO: this needed?
-            clearInputText();
-        }
 
     }
 

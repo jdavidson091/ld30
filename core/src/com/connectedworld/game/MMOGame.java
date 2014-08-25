@@ -27,10 +27,11 @@ public class MMOGame {
     private Texture filledXpTex;
     private Rectangle unfilledXp;
     private Rectangle filledXp;
+    private boolean inEndGame;
 
     public MMOGame(ConnectedWorld game) {
         this.game = game;
-        state = MMOState.AWAITING_INPUT;
+        state = MMOState.BEFORE_CONNECT;
         help1 = "you can do anything (sorta):";
         help2 = ">grind >quest >pvp >dungeon    >wander >help";
         rand = new Random();
@@ -41,6 +42,7 @@ public class MMOGame {
         filledXpTex = new Texture(Gdx.files.internal("filledbar.png"));
         unfilledXp = new Rectangle();
         filledXp = new Rectangle();
+        inEndGame = false;
 
         filledXp.x = 375;
         filledXp.y = 100;
@@ -87,7 +89,10 @@ public class MMOGame {
                 game.outputWriter.writeOutputMessage(help2);
 
             case AWAITING_INPUT:
-                if (input.equals("help")) {
+                if (inEndGame) {
+                    processEndGame();
+                }
+                else if (input.equals("help")) {
                     processHelp();
                 }
                 else if (input.equals("grind")) {
@@ -105,6 +110,7 @@ public class MMOGame {
                 else if (input.equals("wander")) {
                     processWander();
                 }
+
         }
     }
 
@@ -216,7 +222,7 @@ public class MMOGame {
             else if (randomNum > 80) {
                 game.outputWriter.writeOutputMessage("Running as dps...");
                 game.outputWriter.writeOutputMessage("Your priest keeps pulling trash mobs.");
-                game.outputWriter.writeOutputMessage("you get called a fag.");
+                game.outputWriter.writeOutputMessage("you get called a dipshit.");
                 game.outputWriter.writeOutputMessage("youre unmotivated and depressed.");
             }
             else {
@@ -243,6 +249,24 @@ public class MMOGame {
         game.outputWriter.writeOutputMessage("You pretend like people care about you.");
     }
 
+    public void processEndGame() {
+                game.inputWriter.writeOutputMessage("hey.");
+                game.inputWriter.writeOutputMessage("you reached max level.");
+                game.inputWriter.writeOutputMessage("congrats?");
+                game.inputWriter.writeOutputMessage("really?");
+                game.inputWriter.writeOutputMessage("look at yourself.");
+                game.inputWriter.writeOutputMessage("alone in your room.");
+                game.inputWriter.writeOutputMessage("have you been narrating this venture?");
+                game.inputWriter.writeOutputMessage("have you enjoyed what you have become?");
+                game.inputWriter.writeOutputMessage("how our worlds have blurred...");
+                game.inputWriter.writeOutputMessage("connected and overlapping.");
+                game.inputWriter.writeOutputMessage("fighting and dancing.");
+                game.inputWriter.writeOutputMessage("overwhelming and dissonant.");
+                game.inputWriter.writeOutputMessage("and you willing give in...");
+                game.inputWriter.writeOutputMessage("willingly accept the connection.");
+                game.inputWriter.writeOutputMessage("what does that say about you?");
+    }
+
     public void gainXp(int amount) {
         xpAmount += amount;
         if (xpAmount >= xpLevelCap) {
@@ -260,6 +284,11 @@ public class MMOGame {
         xpAmount = 0;
         xpLevelCap = (int) (xpLevelCap * 1.3);
         resetQuests();
+
+        if (levelNum >= 60) {
+            inEndGame = true;
+        }
+
     }
 
     public void drawXp() {
@@ -273,7 +302,11 @@ public class MMOGame {
 
     private void resetQuests() { questsAvailable = 10; }
 
+    public boolean hasntConnectedYet() { return state.equals(MMOState.BEFORE_CONNECT); }
+
+    public boolean isInEndGame() { return inEndGame; }
+
     public enum MMOState {
-        LOGIN, AWAITING_INPUT, WAITING_FOR_OUTPUT
+        BEFORE_CONNECT, LOGIN, AWAITING_INPUT, WAITING_FOR_OUTPUT
     }
 }
